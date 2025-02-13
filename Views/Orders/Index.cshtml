@@ -1,6 +1,35 @@
-﻿namespace OrderManagement.Views.Orders
-{
-    public class Index
-    {
-    }
+﻿@model IEnumerable<OrderManagement.Controllers.Orders.Models.OrdersViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Pedidos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h2>Lista de Pedidos</h2>
+<a href="/Orders/Create" class="btn btn-primary mb-3">Novo pedido</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Número do Pedido</th>
+            <th>Cliente</th>
+            <th>Itens</th>
+            <th>Data do Pedido</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.Customer</td>
+                <td>@order.Items</td>
+                <td>@order.OrderDate</td>
+                <td>
+                    <a href="/Orders/Edit/@order.Id" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/Orders/Delete/@order.Id" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

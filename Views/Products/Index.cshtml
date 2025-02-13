@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OrderManagementSystem.Models.Product>
+﻿@model IEnumerable<OrderManagement.Controllers.Products.Models.ProductsViewModel>
 
 @{
     ViewData["Title"] = "Lista de Produtos";
@@ -18,15 +18,15 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var produto in Model)
+        @foreach (var product in Model)
         {
             <tr>
-                <td>@produto.Name</td>
-                <td>@produto.Price.ToString("C")</td>
-                <td>@produto.Stock</td>
+                <td>@product.Name</td>
+                <td>@product.Price.ToString("C")</td>
+                <td>@product.Stock</td>
                 <td>
-                    <a href="/Products/Edit/@produto.Id" class="btn btn-warning btn-sm">Editar</a>
-                    <a href="/Products/Delete/@produto.Id" class="btn btn-danger btn-sm">Excluir</a>
+                    <a href="/Products/Edit/@product.Id" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/Products/Delete/@product.Id" class="btn btn-danger btn-sm">Excluir</a>
                 </td>
             </tr>
         }
