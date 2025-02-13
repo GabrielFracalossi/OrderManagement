@@ -1,6 +1,8 @@
-﻿namespace OrderManagement.Controllers.Products
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace OrderManagement.Controllers.Products
 {
-    public partial class ProductsController
+    public partial class ProductsController : ControllerBase
     {
     }
 }
