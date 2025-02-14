@@ -11,4 +11,10 @@ namespace OrderManagement.Controllers.Orders.Models
         public List<OrderItemViewModel> Items { get; set; } = new List<OrderItemViewModel>();
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
     }
+
+    public class OrderCreateRequest
+    {
+        public int CustomerId { get; set; }
+        public List<OrderItemRequest> Items { get; set; }
+    }
 }
