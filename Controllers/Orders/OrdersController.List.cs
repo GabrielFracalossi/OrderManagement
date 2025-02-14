@@ -11,15 +11,10 @@ namespace OrderManagement.Controllers.Orders
         [HttpGet]
         public ActionResult<IEnumerable<OrdersViewModel>> GetOrders()
         {
-            return context.Orders.Include(o => o.Customer).Include(o => o.Items).ThenInclude(i => i.Product).ToList();
-        }
-
-        [HttpPost]
-        public ActionResult<OrdersViewModel> CreateOrder(OrdersViewModel order)
-        {
-            context.Orders.Add(order);
-            context.SaveChanges();
-            return CreatedAtAction(nameof(GetOrders), new { id = order.Id }, order);
+            return context.Orders.Include(o => o.Customer)
+                .Include(o => o.Items)
+                .ThenInclude(i => i.Product)
+                .ToList();
         }
     }
 }
