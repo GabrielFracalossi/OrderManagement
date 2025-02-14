@@ -1,6 +1,19 @@
-﻿namespace OrderManagement.Views.Customers
-{
-    public class Create
-    {
-    }
+﻿@model OrderManagement.Controllers.Customers.Models;
+
+@{
+    ViewData["Title"] = "Novo Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h2>Novo Cliente</h2>
+<form method="post" action="/Customers/Create">
+    <div class="mb-3">
+        <label class="form-label">Nome</label>
+        <input type="text" class="form-control" name="Name" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" name="Email" required />
+    </div>
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="/Customers" class="btn btn-secondary">Cancelar</a>
+</form>
