@@ -15,7 +15,7 @@ namespace OrderManagement.Controllers.Products
 
             context.Products.Remove(product);
             context.SaveChanges();
-            return NoContent();
+            return Ok("Produto excluído com sucesso.");
         }
     }
 }

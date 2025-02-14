@@ -15,7 +15,7 @@ namespace OrderManagement.Controllers.OrderItems
 
             context.OrderItems.Remove(orderItem);
             context.SaveChanges();
-            return NoContent();
+            return Ok("Item excluído com sucesso da lista de pedidos.");
         }
     }
 }

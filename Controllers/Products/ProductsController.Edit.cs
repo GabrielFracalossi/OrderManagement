@@ -19,7 +19,7 @@ namespace OrderManagement.Controllers.Products
             existingProduct.Stock = product.Stock;
 
             context.SaveChanges();
-            return NoContent();
+            return Ok("Produto atualizado com sucesso.");
         }
     }
 }
