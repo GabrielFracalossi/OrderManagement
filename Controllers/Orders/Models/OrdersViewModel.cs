@@ -1,4 +1,5 @@
 ﻿using OrderManagement.Controllers.Customers.Models;
+using OrderManagement.Controllers.OrderItems.Models;
 
 namespace OrderManagement.Controllers.Orders.Models
 {

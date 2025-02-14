@@ -1,38 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using OrderManagement.Controllers.OrderItems.Models;
 using OrderManagement.Data;
-using OrderManagement.Controllers.Orders.Models;
 
-namespace OrderManagement.Controllers.Orders
+namespace OrderManagement.Controllers.OrderItems
 {
-    [Route("api/orderitems")]
-    [ApiController]
     public partial class OrderItemsController(OrderContext context) : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<IEnumerable<OrderItemViewModel>> GetOrderItems()
-        {
-            return context.OrderItems.Include(oi => oi.Product).ToList();
-        }
-
         [HttpPost]
         public ActionResult<OrderItemViewModel> CreateOrderItem(OrderItemViewModel orderItem)
         {
             var product = context.Products.Find(orderItem.ProductId);
             if (product == null || product.Stock < orderItem.Quantity)
             {
-                return BadRequest("Produto não disponível em estoque.");
+                return BadRequest("Produto não disponível em estoque.");
             }
 
             product.Stock -= orderItem.Quantity;
             context.OrderItems.Add(orderItem);
             context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetOrderItems), new { id = orderItem.Id }, orderItem);
+            return CreatedAtAction(nameof(GetOrderItemsById), new { id = orderItem.Id }, orderItem);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteOrderItem(int id)
+        public ActionResult<OrderItemViewModel> GetOrderItemsById(int id)
         {
             var orderItem = context.OrderItems.Find(id);
             if (orderItem == null)
@@ -40,9 +30,7 @@ namespace OrderManagement.Controllers.Orders
                 return NotFound();
             }
 
-            context.OrderItems.Remove(orderItem);
-            context.SaveChanges();
-            return NoContent();
+            return orderItem;
         }
     }
 }

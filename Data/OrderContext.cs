@@ -2,6 +2,7 @@
 using OrderManagement.Controllers.Customers.Models;
 using OrderManagement.Controllers.Products.Models;
 using OrderManagement.Controllers.Orders.Models;
+using OrderManagement.Controllers.OrderItems.Models;
 
 namespace OrderManagement.Data
 {

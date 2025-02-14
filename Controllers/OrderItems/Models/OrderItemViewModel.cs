@@ -1,6 +1,6 @@
 ﻿using OrderManagement.Controllers.Products.Models;
 
-namespace OrderManagement.Controllers.Orders.Models
+namespace OrderManagement.Controllers.OrderItems.Models
 {
     public class OrderItemViewModel
     {
