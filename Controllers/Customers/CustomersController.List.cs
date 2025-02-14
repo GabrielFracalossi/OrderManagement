@@ -9,18 +9,15 @@ namespace OrderManagement.Controllers.Customers
     public partial class CustomersController(OrderContext context) : ControllerBase
     {
         [HttpGet]
-        public ActionResult<IEnumerable<CustomersViewModel>> GetCustomers()
+        public ActionResult<IEnumerable<CustomersViewModel>> GetCustomers(int id)
         {
+            var customer = context.Customers.Find(id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
             return context.Customers.ToList();
-        }
-
-        [HttpPost]
-        public ActionResult<CustomersViewModel> CreateCustomer(CustomersViewModel customer)
-        {
-            context.Customers.Add(customer);
-            context.SaveChanges();
-
-            return CreatedAtAction(nameof(GetCustomers), new { id = customer.Id }, customer);
         }
     }
 }

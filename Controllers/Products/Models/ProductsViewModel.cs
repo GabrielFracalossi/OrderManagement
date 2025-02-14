@@ -4,7 +4,7 @@ namespace OrderManagement.Controllers.Products.Models
 {
     public class ProductsViewModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public required string Name { get; set; }
 
         [Range(0.01, double.MaxValue)]
