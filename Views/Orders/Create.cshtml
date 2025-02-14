@@ -1,6 +1,15 @@
-﻿namespace OrderManagement.Views.Orders
-{
-    public class Create
-    {
-    }
+﻿@model OrderManagement.Controllers.Orders.Models;
+
+@{
+    ViewData["Title"] = "Novo Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h2>Novo Pedido</h2>
+<form method="post" action="/Orders/Create">
+    <div class="mb-3">
+        <label class="form-label">Cliente</label>
+        <input type="number" class="form-control" name="CustomerId" required />
+    </div>
+    <button type="submit" class="btn btn-success">Criar Pedido</button>
+    <a href="/Orders" class="btn btn-secondary">Cancelar</a>
+</form>
