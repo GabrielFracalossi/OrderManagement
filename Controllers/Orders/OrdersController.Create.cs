@@ -6,9 +6,20 @@ namespace OrderManagement.Controllers.Orders
 {
     public partial class OrdersController
     {
+        [HttpGet]
+        public ActionResult<IEnumerable<OrdersViewModel>> Create()
+        {
+            var products = context.Products.ToList();
+            var customers = context.Customers.ToList();
+
+            ViewBag.Products = products;
+            ViewBag.Customers = customers;
+
+            return View();
+        }
+
         [HttpPost]
-        public ActionResult<OrdersViewModel> CreateOrder(
-            [FromBody] OrderCreateRequest request)
+        public ActionResult<OrdersViewModel> Create([FromForm] OrderCreateRequest request)
         {
             var customer = context.Customers.Find(request.CustomerId);
 
@@ -23,7 +34,7 @@ namespace OrderManagement.Controllers.Orders
             {
                 var product = context.Products.Find(item.ProductId);
 
-                if (product == null || product.Stock < item.Quantity)
+                if (product == null || product.Stock == 0 || product.Stock < item.Quantity)
                 {
                     return BadRequest("Produto não disponível em estoque.");
                 }
@@ -41,13 +52,13 @@ namespace OrderManagement.Controllers.Orders
             {
                 CustomerId = customer.Id,
                 Customer = customer,
-                Items = orderItems
+                Items = orderItems,
             };
 
             context.Orders.Add(order);
             context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetOrders), new { id = order.Id }, order);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace OrderManagement.Controllers.Products
 {
-    public partial class ProductsController : ControllerBase
+    public partial class ProductsController : Controller
     {
     }
 }

@@ -4,14 +4,15 @@ using OrderManagement.Controllers.Customers.Models;
 
 namespace OrderManagement.Controllers.Customers
 {
-    [Route("api/customers")]
-    [ApiController]
-    public partial class CustomersController(OrderContext context) : ControllerBase
+    public partial class CustomersController(OrderContext context) : Controller
     {
         [HttpGet]
-        public ActionResult<IEnumerable<CustomersViewModel>> GetCustomers()
+        public ActionResult<IEnumerable<CustomersViewModel>> Index()
         {
-            return context.Customers.ToList();
+            var customers = context.Customers
+                .ToList();
+
+            return View(customers);
         }
     }
 }

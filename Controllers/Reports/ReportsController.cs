@@ -2,7 +2,7 @@
 
 namespace OrderManagement.Controllers.Reports
 {
-    public partial class ReportsController : ControllerBase
+    public partial class ReportsController : Controller
     {
     }
 }

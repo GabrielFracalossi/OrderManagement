@@ -6,8 +6,8 @@ namespace OrderManagement.Controllers.Reports
 {
     public partial class ReportsController(OrderContext context)
     {
-        [HttpGet("total-spent-by-customer")]
-        public IActionResult GetTotalSpentByCustomer()
+        [HttpGet]
+        public IActionResult Index()
         {
             var report = context.Orders
                 .Include(o => o.Customer)
@@ -23,7 +23,7 @@ namespace OrderManagement.Controllers.Reports
                 .OrderByDescending(o => o.TotalSpent)
                 .ToList();
 
-            return Ok(report);
+            return View(report);
         }
     }
 }

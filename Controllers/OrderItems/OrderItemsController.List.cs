@@ -5,14 +5,16 @@ using OrderManagement.Data;
 
 namespace OrderManagement.Controllers.Orders
 {
-    [Route("api/orderitems")]
-    [ApiController]
-    public partial class OrderItemsController(OrderContext context) : ControllerBase
+    public partial class OrderItemsController(OrderContext context) : Controller
     {
         [HttpGet]
-        public ActionResult<IEnumerable<OrderItemViewModel>> GetOrderItems()
+        public ActionResult<IEnumerable<OrderItemViewModel>> Index()
         {
-            return context.OrderItems.Include(oi => oi.Product).ToList();
+            var orderItems = context.OrderItems
+                .Include(oi => oi.Product)
+                .ToList();
+
+            return View(orderItems);
         }
     }
 }

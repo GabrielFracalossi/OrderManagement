@@ -2,13 +2,36 @@
 
 @{
     ViewData["Title"] = "Novo Pedido";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+    var products = ViewBag.Products;
+    var customers = ViewBag.Customers;
 }
 <h2>Novo Pedido</h2>
 <form method="post" action="/Orders/Create">
     <div class="mb-3">
         <label class="form-label">Cliente</label>
-        <input type="number" class="form-control" name="CustomerId" required />
+        <select class="form-control" name="CustomerId" required >
+            <option value="" disabled selected hidden>Escolha um cliente</option>
+            @foreach (var customer in customers)
+            {
+                <option value="@customer.Id">@customer.Name</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Produto</label>
+        <select class="form-control" name="ProductId" required >
+            <option value="" disabled selected hidden>Escolha um produto</option>
+            @foreach (var product in products)
+            {
+                <option value="@product.Id">@product.Name</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Quantidade</label>
+        <input type="text" class="form-control" name="Quantity" required />
     </div>
     <button type="submit" class="btn btn-success">Criar Pedido</button>
     <a href="/Orders" class="btn btn-secondary">Cancelar</a>

@@ -5,13 +5,19 @@ namespace OrderManagement.Controllers.Customers
 {
     public partial class CustomersController
     {
+        [HttpGet]
+        public ActionResult<IEnumerable<CustomersViewModel>> Create()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public ActionResult<CustomersViewModel> CreateCustomer(CustomersViewModel customer)
+        public ActionResult<CustomersViewModel> Create(CustomersViewModel customer)
         {
             context.Customers.Add(customer);
             context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetCustomers), new { id = customer.Id }, customer);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

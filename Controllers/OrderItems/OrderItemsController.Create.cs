@@ -4,10 +4,16 @@ using OrderManagement.Data;
 
 namespace OrderManagement.Controllers.OrderItems
 {
-    public partial class OrderItemsController(OrderContext context) : ControllerBase
+    public partial class OrderItemsController(OrderContext context) : Controller
     {
+        [HttpGet]
+        public ActionResult<IEnumerable<OrderItemViewModel>> Create()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public ActionResult<OrderItemViewModel> CreateOrderItem(OrderItemViewModel orderItem)
+        public ActionResult<OrderItemViewModel> Create(OrderItemViewModel orderItem)
         {
             var product = context.Products.Find(orderItem.ProductId);
             if (product == null || product.Stock < orderItem.Quantity)
@@ -19,7 +25,7 @@ namespace OrderManagement.Controllers.OrderItems
             context.OrderItems.Add(orderItem);
             context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetOrderItemsById), new { id = orderItem.Id }, orderItem);
+            return RedirectToAction(nameof(Index));
         }
 
         public ActionResult<OrderItemViewModel> GetOrderItemsById(int id)

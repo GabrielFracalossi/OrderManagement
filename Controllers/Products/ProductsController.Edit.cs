@@ -5,8 +5,20 @@ namespace OrderManagement.Controllers.Products
 {
     public partial class ProductsController
     {
-        [HttpPut("{id}")]
-        public IActionResult UpdateProduct(int id, EditProductsViewModel product)
+        [HttpGet]
+        public ActionResult<EditProductsViewModel> Edit(int id)
+        {
+            var product = context.Products.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, EditProductsViewModel product)
         {
             var existingProduct = context.Products.Find(id);
             if (existingProduct == null)
@@ -19,7 +31,7 @@ namespace OrderManagement.Controllers.Products
             existingProduct.Stock = product.Stock;
 
             context.SaveChanges();
-            return Ok("Produto atualizado com sucesso.");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

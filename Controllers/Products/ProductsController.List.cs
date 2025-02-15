@@ -4,14 +4,15 @@ using OrderManagement.Controllers.Products.Models;
 
 namespace OrderManagement.Controllers.Products
 {
-    [Route("api/products")]
-    [ApiController]
-    public partial class ProductsController(OrderContext context) : ControllerBase
+    public partial class ProductsController(OrderContext context) : Controller
     {
         [HttpGet]
-        public ActionResult<IEnumerable<ProductsViewModel>> GetProducts()
+        public ActionResult<IEnumerable<ProductsViewModel>> Index()
         {
-            return context.Products.ToList();
+            var products = context.Products
+                .ToList();
+
+            return View(products);
         }
     }
 }

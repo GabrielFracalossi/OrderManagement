@@ -4,18 +4,18 @@ using OrderManagement.Data;
 using OrderManagement.Controllers.Orders.Models;
 namespace OrderManagement.Controllers.Orders
 {
-    [Route("api/orders")]
-    [ApiController]
-    public partial class OrdersController(OrderContext context) : ControllerBase
+    public partial class OrdersController(OrderContext context) : Controller
     {
         [HttpGet]
-        public ActionResult<IEnumerable<OrdersViewModel>> GetOrders()
+        public ActionResult<IEnumerable<OrdersViewModel>> Index()
         {
-            return context.Orders
+            var orders = context.Orders
                 .Include(o => o.Customer)
                 .Include(o => o.Items)
                 .ThenInclude(i => i.Product)
                 .ToList();
+         
+            return View(orders);
         }
     }
 }
