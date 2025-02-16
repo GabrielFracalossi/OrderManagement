@@ -13,25 +13,65 @@
         <label class="form-label">Cliente</label>
         <select class="form-control" name="CustomerId" required >
             <option value="" disabled selected hidden>Escolha um cliente</option>
-            @foreach (var customer in customers)
+            @foreach (var customer in customers)    
             {
                 <option value="@customer.Id">@customer.Name</option>
             }
         </select>
     </div>
     <div class="mb-3">
-        <label class="form-label">Produto</label>
-        <select class="form-control" name="ProductId" required >
-            <option value="" disabled selected hidden>Escolha um produto</option>
-            @foreach (var product in products)
-            {
-                <option value="@product.Id">@product.Name</option>
-            }
-        </select>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Quantidade</label>
-        <input type="text" class="form-control" name="Quantity" required />
+        <div class="accordion mb-3" id="accordionProducts">
+            <div class="accordion-item">
+                <div class="accordion-header" id="headingProducts">
+                    <button class="accordion-button collapsed" 
+                            type="button" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#collapseProducts" 
+                            aria-expanded="false" 
+                            aria-controls="collapseProducts">
+                            Escolha os Produtos
+                    </button>
+                </div>
+                <div id="collapseProducts"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingProducts"
+                     data-bs-parent="#accordionProducts">
+                    <div class="accordion-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Selecionar</th>
+                                            <th>Produto</th>
+                                            <th>Estoque</th>
+                                            <th>Preço</th>
+                                            <th>Quantidade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var product in products)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="SelectedProducts" value="@product.Id" class="product-checkbox" />
+                                                </td>
+                                                <td>@product.Name</td>
+                                                <td>@product.Stock</td>
+                                                <td>@product.Price.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</td>
+                                                <td>
+                                                    <input type="number" name="Quantities[@product.Id]" class="form-control" min="1" max="@product.Stock" required />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <button type="submit" class="btn btn-success">Criar Pedido</button>
     <a href="/Orders" class="btn btn-secondary">Cancelar</a>
