@@ -50,17 +50,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var product in products)
+                                        @for (int i = 0; i < products.Count; i++)
                                         {
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="SelectedProducts" value="@product.Id" class="product-checkbox" />
+                                                    <input type="checkbox" name="Items[@i].ProductId" value="@products[i].Id" class="product-checkbox" />
                                                 </td>
-                                                <td>@product.Name</td>
-                                                <td>@product.Stock</td>
-                                                <td>@product.Price.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</td>
+                                                <td>@products[i].Name</td>
+                                                <td>@products[i].Stock</td>
+                                                <td>@products[i].Price.ToString("C")</td>
                                                 <td>
-                                                    <input type="number" name="Quantities[@product.Id]" class="form-control" min="1" max="@product.Stock" required />
+                                                    <input type="number" name="Items[@i].Quantity" class="form-control" min="1" max="@products[i].Stock" required />
                                                 </td>
                                             </tr>
                                         }
@@ -76,3 +76,26 @@
     <button type="submit" class="btn btn-success">Criar Pedido</button>
     <a href="/Orders" class="btn btn-secondary">Cancelar</a>
 </form>
+
+@section Scripts{
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let checkboxes = document.querySelectorAll(".product-checkbox");
+
+            checkboxes.forEach(function (checkbox) {
+                let quantityInput = checkbox.closest("tr").querySelector("input[type='number']");
+
+                quantityInput.disabled = true;
+
+                checkbox.addEventListener("change", function () {
+                    quantityInput.disabled = !this.checked;
+                    if (!this.checked) {
+                        quantityInput.value = "";
+                    }
+                });
+            });
+        });
+    </script>
+
+}
