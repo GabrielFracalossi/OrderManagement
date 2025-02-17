@@ -17,6 +17,7 @@ namespace OrderManagement.Controllers.Reports
                 .Select(group => new
                 {
                     CustomerId = group.Key.Id,
+                    Date = group.Max(o => o.OrderDate),
                     CustomerName = group.Key.Name,
                     TotalSpent = group.Sum(o => o.Items.Sum(i => i.Quantity * i.Product.Price))
                 })

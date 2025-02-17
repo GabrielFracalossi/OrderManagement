@@ -16,7 +16,6 @@
             <th>Pedido</th>
             <th>Preço</th>
             <th>Total</th>
-            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -25,19 +24,19 @@
             <tr>
                 <td>@order.OrderDate</td>
                 <td>@order.Customer.Name</td>
-                @foreach (var item in order.Items)
-                {
-                    <td>
-                        <ul>
-                            <li>Produto: @item.Product.Name - Quantidade: @item.Quantity</li>
-                        </ul>
-                    </td>
-                    <td>@item.Product.Price.ToString("C")</td>
-                }
-                <td>@order.Items.Sum(i => i.Quantity * i.Product.Price).ToString("C")</td>
                 <td>
-                    <a href="/Orders/Edit/@order.Id" class="btn btn-warning btn-sm">Editar</a>
+                    @foreach (var item in order.Items)
+                    {
+                        <div>Produto: @item.Product.Name - Quantidade: @item.Quantity</div>
+                    }
                 </td>
+                <td>
+                    @foreach (var item in order.Items)
+                    {
+                        <div>@item.Product.Price.ToString("C")</div>
+                    }
+                </td>
+                <td>@order.Items.Sum(i => i.Quantity * i.Product.Price).ToString("C")</td>
             </tr>
         }
     </tbody>

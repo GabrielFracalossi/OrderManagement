@@ -6,6 +6,8 @@
 
     var products = ViewBag.Products;
     var customers = ViewBag.Customers;
+
+    int itemIndex = 0;
 }
 <h2>Novo Pedido</h2>
 <form method="post" action="/Orders/Create">
@@ -50,19 +52,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @for (int i = 0; i < products.Count; i++)
+                                        @foreach (var product in products)
                                         {
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="Items[@i].ProductId" value="@products[i].Id" class="product-checkbox" />
+                                                    <input type="checkbox" class="product-checkbox" data-index="@itemIndex" data-product-id="@product.Id" />
                                                 </td>
-                                                <td>@products[i].Name</td>
-                                                <td>@products[i].Stock</td>
-                                                <td>@products[i].Price.ToString("C")</td>
+                                                <td>@product.Name</td>
+                                                <td>@product.Stock</td>
+                                                <td>@product.Price.ToString("C")</td>
                                                 <td>
-                                                    <input type="number" name="Items[@i].Quantity" class="form-control" min="1" max="@products[i].Stock" required />
+                                                    <input type="number" name="Items[@itemIndex].Quantity" class="form-control quantity-input" min="1" max="@product.Stock" disabled data-index="@itemIndex" />
+                                                    <input type="hidden" name="Items[@itemIndex].ProductId" value="@product.Id" />
                                                 </td>
                                             </tr>
+                                            itemIndex++;
                                         }
                                     </tbody>
                                 </table>
@@ -77,25 +81,27 @@
     <a href="/Orders" class="btn btn-secondary">Cancelar</a>
 </form>
 
-@section Scripts{
-
+@section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let checkboxes = document.querySelectorAll(".product-checkbox");
 
             checkboxes.forEach(function (checkbox) {
-                let quantityInput = checkbox.closest("tr").querySelector("input[type='number']");
+                let index = checkbox.getAttribute("data-index");
+                let quantityInput = document.querySelector(`.quantity-input[data-index='${index}']`);
 
                 quantityInput.disabled = true;
 
                 checkbox.addEventListener("change", function () {
-                    quantityInput.disabled = !this.checked;
-                    if (!this.checked) {
+                    if (this.checked) {
+                        quantityInput.disabled = false;
+                        quantityInput.focus();
+                    } else {
+                        quantityInput.disabled = true;
                         quantityInput.value = "";
                     }
                 });
             });
         });
     </script>
-
 }

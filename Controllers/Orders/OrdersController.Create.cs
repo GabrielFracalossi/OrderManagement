@@ -39,13 +39,16 @@ namespace OrderManagement.Controllers.Orders
                     return BadRequest("Produto não disponível em estoque.");
                 }
 
-                product.Stock -= item.Quantity;
-                orderItems.Add(new OrderItemViewModel
+                if (item.Quantity > 0)
                 {
-                    ProductId = product.Id,
-                    Product = product,
-                    Quantity = item.Quantity
-                });
+                    product.Stock -= item.Quantity;
+                    orderItems.Add(new OrderItemViewModel
+                    {
+                        ProductId = product.Id,
+                        Product = product,
+                        Quantity = item.Quantity
+                    });
+                }
             }
 
             var order = new OrdersViewModel
