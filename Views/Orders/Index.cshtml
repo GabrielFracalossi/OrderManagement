@@ -3,41 +3,49 @@
 @{
     ViewData["Title"] = "Lista de Pedidos";
     Layout = "~/Views/Shared/Layout.cshtml";
+
+    var orders = Model.Count();
 }
 
 <h2>Lista de Pedidos</h2>
 <a href="/Orders/Create" class="btn btn-primary mb-3">Novo pedido</a>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Data</th>
-            <th>Cliente</th>
-            <th>Pedido</th>
-            <th>Preço</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var order in Model)
-        {
+@if (orders >= 1){
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@order.OrderDate</td>
-                <td>@order.Customer.Name</td>
-                <td>
-                    @foreach (var item in order.Items)
-                    {
-                        <div>Produto: @item.Product.Name - Quantidade: @item.Quantity</div>
-                    }
-                </td>
-                <td>
-                    @foreach (var item in order.Items)
-                    {
-                        <div>@item.Product.Price.ToString("C")</div>
-                    }
-                </td>
-                <td>@order.Items.Sum(i => i.Quantity * i.Product.Price).ToString("C")</td>
+                <th>Data</th>
+                <th>Cliente</th>
+                <th>Pedido</th>
+                <th>Preço</th>
+                <th>Total</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderDate</td>
+                    <td>@order.Customer.Name</td>
+                    <td>
+                        @foreach (var item in order.Items)
+                        {
+                            <div>Produto: @item.Product.Name - Quantidade: @item.Quantity</div>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var item in order.Items)
+                        {
+                            <div>@item.Product.Price.ToString("C")</div>
+                        }
+                    </td>
+                    <td>@order.Items.Sum(i => i.Quantity * i.Product.Price).ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (orders == 0){
+    <p>Não há nenhum pedido cadastrado.</p>
+}

@@ -3,29 +3,37 @@
 @{
     ViewData["Title"] = "Lista de Clientes";
     Layout = "~/Views/Shared/Layout.cshtml";
+
+    var customers = Model.Count();
 }
 
 <h2>Lista de Clientes</h2>
 <a href="/Customers/Create" class="btn btn-primary mb-3">Novo cliente</a>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var customer in Model)
-        {
+@if (customers >= 1){
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@customer.Name</td>
-                <td>@customer.Email</td>
-                <td>
-                    <a href="/Customers/Edit/@customer.Id" class="btn btn-warning btn-sm">Editar</a>
-                </td>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Ações</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@customer.Name</td>
+                    <td>@customer.Email</td>
+                    <td>
+                        <a href="/Customers/Edit/@customer.Id" class="btn btn-warning btn-sm">Editar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (customers == 0){
+    <p>Não há nenhum cliente cadastrado.</p>
+}

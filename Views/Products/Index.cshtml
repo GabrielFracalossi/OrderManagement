@@ -3,31 +3,39 @@
 @{
     ViewData["Title"] = "Lista de Produtos";
     Layout = "~/Views/Shared/Layout.cshtml";
+
+    var products = Model.Count();
 }
 
 <h2>Lista de Produtos</h2>
 <a href="/Products/Create" class="btn btn-primary mb-3">Novo Produto</a>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Preço</th>
-            <th>Estoque</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model)
-        {
+@if (products >= 1){
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@product.Name</td>
-                <td>@product.Price.ToString("C")</td>
-                <td>@product.Stock</td>
-                <td>
-                    <a href="/Products/Edit/@product.Id" class="btn btn-warning btn-sm">Editar</a>
-                </td>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>Ações</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price.ToString("C")</td>
+                    <td>@product.Stock</td>
+                    <td>
+                        <a href="/Products/Edit/@product.Id" class="btn btn-warning btn-sm">Editar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (products == 0){
+    <p>Não há nenhum produto cadastrado.</p>
+}
